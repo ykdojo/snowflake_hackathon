@@ -1,0 +1,184 @@
+OpenAlex Data API (Managed by Util on Snowflake Data Marketplace)
+More information: https://app.snowflake.com/marketplace/listing/GZT0ZOMX4O7/util-openalex
+
+OpenAlex
+Util
+OpenAlex is an index of hundreds of millions of interconnected entities across the global research system created & maintained by the nonprofit OurResearch (https://ourresearch.org/).
+
+Description courtesy of the OpenAlex.org website:
+~~~
+The OpenAlex dataset describes scholarly entities and how those entities are connected to each other. There are five types of entities:
+1. Works are papers, books, datasets, etc; they cite other works
+2. Authors are people who create works
+3. Venues are journals and repositories that host works
+4. Institutions are universities and other orgs that are affiliated with works (via authors)
+5. Concepts tag Works with a topic
+
+Together, these make a huge web (or more technically, heterogeneous directed graph) of hundreds of millions of entities and billions of connections between them all.
+~~~
+
+Util uses OpenAlex & the Microsoft Academic Graph (MAG) to power our advanced machine learning to evaluate the social and environmental impact companies around the globe.
+
+Schema:
+AUTHORS
+openalex_id (text)
+id (text)
+orcid (text)
+display_name (text)
+display_name_alternatives (variant)
+works_count (number)
+cited_by_count (number)
+ids (variant)
+last_known_institution (variant)
+x_concepts (variant)
+counts_by_year (variant)
+works_api_url (text)
+updated_date (timestamp_ntz)
+created_date (timestamp_ntz)
+openalex_filename (text)
+openalex_row_number (number)
+util_import_date (timestamp_ntz)
+
+CONCEPTS
+openalex_id (text)
+id (text)
+wikidata (text)
+wikidata_id (text)
+display_name (text)
+level (number)
+works_count (number)
+cited_by_count (number)
+ids (variant)
+image_url (text)
+image_thumbnail_url (text)
+international (variant)
+ancestors (variant)
+related_concepts (variant)
+counts_by_year (variant)
+works_api_url (text)
+updated_date (timestamp_ntz)
+created_date (timestamp_ntz)
+openalex_filename (text)
+openalex_row_number (number)
+util_import_date (timestamp_ntz)
+
+INSTITUTIONS
+openalex_id (text)
+id (text)
+ror (text)
+display_name (text)
+country_code (text)
+type (text)
+homepage_url (text)
+image_url (text)
+image_thumbnail_url (text)
+display_name_acronyms (variant)
+works_count (number)
+ids (variant)
+geo (variant)
+international (variant)
+associated_institutions (variant)
+counts_by_year (variant)
+x_concepts (variant)
+works_api_url (text)
+updated_date (timestamp_ntz)
+created_date (timestamp_ntz)
+openalex_filename (text)
+openalex_row_number (number)
+util_import_date (timestamp_ntz)
+
+VENUES
+openalex_id (text)
+id (text)
+issn_l (text)
+issn (text)
+display_name (text)
+publisher (text)
+works_count (number)
+cited_by_count (number)
+is_oa (boolean)
+is_in_doaj (boolean)
+homepage_url (text)
+ids (variant)
+x_concepts (variant)
+counts_by_year (variant)
+works_api_url (text)
+updated_date (timestamp_ntz)
+created_date (timestamp_ntz)
+openalex_filename (text)
+openalex_row_number (number)
+util_import_date (timestamp_ntz)
+
+WORKS
+openalex_id (text)
+id (text)
+doi (text)
+title (text)
+display_name (text)
+publication_year (number)
+publication_date (date)
+ids (variant)
+host_venue (variant)
+type (text)
+open_access (variant)
+authorships (variant)
+cited_by_count (number)
+biblio (variant)
+is_retracted (boolean)
+is_paratext (boolean)
+concepts (variant)
+mesh (variant)
+alternate_host_venues (variant)
+referenced_works (variant)
+related_works (variant)
+abstract_inverted_index (variant)
+cited_by_api_url (text)
+counts_by_year (variant)
+updated_date (timestamp_ntz)
+created_date (timestamp_ntz)
+openalex_filename (text)
+openalex_row_number (number)
+util_import_date (timestamp_ntz)
+Business Needs
+Machine Learning
+OpenAlex is a free and open catalog of the world's scholarly papers, researchers, journals, and institutions - along with all the ways they're connected to one another.
+
+Using OpenAlex, you can build your own scholarly search engine, recommender service, or knowledge graph. You can help manage resea... More
+Usage Examples
+Find open-access articles from 2022
+1
+select * from openalex.works where publication_year = '2022' and open_access:is_oa::boolean = true limit 100;
+Find works that relate to medicine
+1
+select * from openalex.works where contains(concepts,'C71924100') limit 100;
+Find concepts that relate to medicine
+1
+select
+2
+    c.display_name as concept
+3
+    ,rc.value:display_name::text as related_concept
+4
+    ,rc.value:id::text as related_concept_id
+5
+    ,rc.value:level::number as related_concept_level
+6
+    ,rc.value:score::float as related_concept_score
+7
+    ,rc.value:wikidata:text as related_concept_wikidata
+8
+from
+9
+    openalex.concepts as c
+10
+join
+11
+    lateral flatten (input=> c.related_concepts) as rc
+12
+where
+13
+    c.openalex_id = 'C71924100'
+14
+;
+15
+​

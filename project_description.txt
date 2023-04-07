@@ -1,0 +1,24 @@
+Project Description
+Title: Scientific Paper Search Web Application
+
+Objective:
+The goal of this project is to create a Streamlit web application that allows users to search for scientific papers and view their summaries. The application will be connected to a public Snowflake data source, specifically the OpenAlex dataset managed by Util on Snowflake Data Marketplace.
+
+Features:
+- Users can enter a query to search for scientific papers.
+- The application will retrieve relevant papers and their summaries based on the query.
+- The results will be displayed in the Streamlit app, including the title, authors, and summary of each paper.
+
+Technologies:
+- Streamlit: For building the web application interface.
+- Snowflake Data Marketplace: For accessing the OpenAlex dataset.
+- Snowflake Connector for Python: For connecting to the Snowflake database and executing SQL queries.
+
+Note: The project is part of the Snowflake Hackathon, and the objective is to create a new Streamlit app connected to a public Snowflake data source.
+
+Other Files in the Project Folder:
+- Snowflake_Hackathon_Official_Rules.txt: Contains the official rules, terms, and conditions for the Snowflake Hackathon. It provides information about the contest period, eligibility, how to enter, entry requirements, judging criteria, prizes, and other important details related to the hackathon.
+- openalex_doc_2023_0406.txt: Contains information about OpenAlex, an index of scholarly entities and their connections. The file provides a description of the OpenAlex dataset, schema for various tables, business needs, usage examples, and SQL queries for finding open-access articles and related works.
+- streamlit_snowflake_tutorial.txt: Contains an article written by Chanin Nantasenamat, titled "How to connect Streamlit to Snowflake." The article provides a step-by-step practical tutorial on how to create a Streamlit web application that connects to a Snowflake database, loads data from a database table, and writes out the data.
+
+Note: The project folder may contain additional files and resources related to the development and implementation of the Scientific Paper Search Web Application.
