@@ -30,6 +30,21 @@ fig = px.line(df_combined, x='DATE', y='Close', color='Ticker',
               labels={'Close': 'Closing Price', 'DATE': 'Date'},
               title='Trends for Selected Stock Tickers')
 
+# Calculate relative change for Close (stock price) and set starting value to 100
+for ticker in selected_tickers:
+    df_combined.loc[df_combined['Ticker'] == ticker, 'Relative_Close'] = df_combined[df_combined['Ticker'] == ticker]['Close'] / df_combined[df_combined['Ticker'] == ticker]['Close'].iloc[0] * 100
+    df_combined.loc[df_combined['Ticker'] == ticker, 'Relative_TOTAL_VISITS'] = df_combined[df_combined['Ticker'] == ticker]['TOTAL_VISITS'] / df_combined[df_combined['Ticker'] == ticker]['TOTAL_VISITS'].iloc[0] * 100
+
+# Create a line plot for relative change in stock price
+fig_relative_close = px.line(df_combined, x='DATE', y='Relative_Close', color='Ticker',
+                             labels={'Relative_Close': 'Relative Stock Price', 'DATE': 'Date'},
+                             title='Relative Change in Stock Price (Starting Value = 100)')
+
+# Create a line plot for relative change in total visits
+fig_relative_total_visits = px.line(df_combined, x='DATE', y='Relative_TOTAL_VISITS', color='Ticker',
+                                    labels={'Relative_TOTAL_VISITS': 'Relative Total Visits', 'DATE': 'Date'},
+                                    title='Relative Change in Total Visits (Starting Value = 100)')
+
 # Create tabs using Streamlit's beta_expander function
 with st.beta_expander('Stock Price', expanded=True):
     # Display the plot for absolute change in stock price
