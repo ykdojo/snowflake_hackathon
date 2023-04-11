@@ -46,3 +46,22 @@ fig_s_mean = px.line(df_combined, x='DATE', y='S_MEAN', color='Ticker',
                      title='Average Sentiment Score for Selected Stock Tickers')
 # Display the plot for S_MEAN in Streamlit
 st.plotly_chart(fig_s_mean)
+
+# Calculate relative change for Close (stock price) and set starting value to 100
+for ticker in selected_tickers:
+    df_combined.loc[df_combined['Ticker'] == ticker, 'Relative_Close'] = df_combined[df_combined['Ticker'] == ticker]['Close'] / df_combined[df_combined['Ticker'] == ticker]['Close'].iloc[0] * 100
+    df_combined.loc[df_combined['Ticker'] == ticker, 'Relative_TOTAL_VISITS'] = df_combined[df_combined['Ticker'] == ticker]['TOTAL_VISITS'] / df_combined[df_combined['Ticker'] == ticker]['TOTAL_VISITS'].iloc[0] * 100
+
+# Create a line plot for relative change in stock price
+fig_relative_close = px.line(df_combined, x='DATE', y='Relative_Close', color='Ticker',
+                             labels={'Relative_Close': 'Relative Stock Price', 'DATE': 'Date'},
+                             title='Relative Change in Stock Price (Starting Value = 100)')
+# Display the plot for relative change in stock price in Streamlit
+st.plotly_chart(fig_relative_close)
+
+# Create a line plot for relative change in total visits
+fig_relative_total_visits = px.line(df_combined, x='DATE', y='Relative_TOTAL_VISITS', color='Ticker',
+                                    labels={'Relative_TOTAL_VISITS': 'Relative Total Visits', 'DATE': 'Date'},
+                                    title='Relative Change in Total Visits (Starting Value = 100)')
+# Display the plot for relative change in total visits in Streamlit
+st.plotly_chart(fig_relative_total_visits)
