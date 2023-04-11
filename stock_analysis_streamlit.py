@@ -120,3 +120,23 @@ with sentiment_relative:
     st.plotly_chart(fig_relative_s_mean)
 with sentiment_absolute:
     st.plotly_chart(fig_s_mean)
+
+
+# Create a line plot for each selected ticker that combines relative change in stock price, total visits, and sentiment score
+for ticker in selected_tickers:
+    df_ticker = df_combined[df_combined["Ticker"] == ticker]
+    fig_combined = px.line(
+        df_ticker,
+        x="DATE",
+        y=["Relative_Close", "Relative_TOTAL_VISITS", "Relative_S_MEAN"],
+        labels={
+            "Relative_Close": "Relative Stock Price",
+            "Relative_TOTAL_VISITS": "Relative Total Visits",
+            "Relative_S_MEAN": "Relative Sentiment Score",
+            "DATE": "Date",
+            "value": "Relative Change",
+            "variable": "Metric",
+        },
+        title=f"Combined Analysis for {ticker} (Starting Value = 100)",
+    )
+    st.plotly_chart(fig_combined)
