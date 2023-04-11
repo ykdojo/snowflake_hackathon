@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 import snowflake.connector
 import pandas as pd
 import yfinance as yf  # Import the yfinance library
+import streamlit as st
 
 # Load environment variables from the .env file
 load_dotenv()
@@ -27,7 +28,7 @@ def execute_query_and_fetch_results(conn, query):
         columns = [desc[0] for desc in cur.description]
     return pd.DataFrame(results, columns=columns)
 
-
+@st.cache_data
 def combine_data(TICKER):
     # Define queries
     query_sentiment = f"""
