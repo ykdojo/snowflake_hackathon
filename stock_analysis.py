@@ -62,3 +62,24 @@ print('Sentiment Data:')
 print(df_sentiment.head())
 print('Website Traffic Data:')
 print(df_traffic.head())
+
+# Import the yfinance library
+import yfinance as yf
+
+# Retrieve stock price data from Yahoo Finance
+print('Retrieving stock price data from Yahoo Finance...')
+df_stock_price = yf.download(TICKER, start=df_sentiment['DATE'].min(), end=df_sentiment['DATE'].max())
+
+# Reset the index of the stock price DataFrame
+df_stock_price.reset_index(inplace=True)
+
+# Merge the stock price data with the sentiment and website traffic data based on the date
+df_combined = pd.merge(df_sentiment, df_traffic, on='DATE', how='inner')
+df_combined = pd.merge(df_combined, df_stock_price, left_on='DATE', right_on='Date', how='inner')
+
+# Drop the duplicate 'Date' column
+df_combined.drop(columns=['Date'], inplace=True)
+
+# Print the combined DataFrame (for demonstration purposes)
+print('Combined Data:')
+print(df_combined.head())
