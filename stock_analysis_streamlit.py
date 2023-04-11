@@ -1,4 +1,15 @@
 import streamlit as st
+
+# Title
+st.title('Stock Analysis Dashboard')
+
+# Description
+st.markdown("""
+Explore stock data, website visits, and sentiment analysis with this interactive dashboard. Select stock tickers to analyze trends in stock prices, website traffic, and sentiment scores. Visualize both absolute values and relative changes to gain valuable insights.
+""")
+
+# Separator
+st.markdown('---')
 import plotly.express as px
 import pandas as pd
 from stock_analysis import combine_data
@@ -121,6 +132,15 @@ with sentiment_relative:
 with sentiment_absolute:
     st.plotly_chart(fig_s_mean)
 
+
+# Separator
+st.markdown('---')
+
+# Header for Combined Analysis
+st.header('Combined Analysis')
+
+# Description for Combined Analysis
+st.markdown('Below are combined charts that show relative changes in stock price, website visits, and sentiment scores for each selected ticker. The charts provide a comprehensive view of how these three metrics have evolved over time, allowing you to identify correlations and trends that may impact the performance of the selected stocks.')
 
 # Create a line plot for each selected ticker that combines relative change in stock price, total visits, and sentiment score
 for ticker in selected_tickers:
