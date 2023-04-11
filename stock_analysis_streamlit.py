@@ -5,7 +5,7 @@ st.title('Stock Analysis Dashboard')
 
 # Description
 st.markdown("""
-Explore stock price data, website visits, and sentiment analysis with this interactive dashboard. Select stock tickers to analyze trends in stock prices, website traffic, and sentiment scores. Visualize both absolute values and relative changes to gain valuable insights.
+With this interactive tool, you can select stock tickers and explore trends in daily closing prices, website traffic, and sentiment scores. The dashboard provides visualizations of both absolute values and relative changes, giving you valuable insights into the performance of the selected stocks.
 """)
 
 # Separator
