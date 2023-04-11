@@ -125,17 +125,32 @@ with sentiment_absolute:
 # Create a line plot for each selected ticker that combines relative change in stock price, total visits, and sentiment score
 for ticker in selected_tickers:
     df_ticker = df_combined[df_combined["Ticker"] == ticker]
-    fig_combined = px.line(
+    # Reshape the data into a long format
+    df_ticker_melted = pd.melt(
         df_ticker,
+        id_vars=["DATE"],
+        value_vars=["Relative_Close", "Relative_TOTAL_VISITS", "Relative_S_MEAN"],
+        var_name="Metric",
+        value_name="Relative Change",
+    )
+    # Map column names to more descriptive labels
+    metric_labels = {
+        "Relative_Close": "Stock Price Change (Beginning = 100)",
+        "Relative_TOTAL_VISITS": "Relative Website Visit Change",
+        "Relative_S_MEAN": "Relative Average Sentiment Score Change",
+    }
+    df_ticker_melted["Metric"] = df_ticker_melted["Metric"].map(metric_labels)
+
+    # Create the line plot
+    fig_combined = px.line(
+        df_ticker_melted,
         x="DATE",
-        y=["Relative_Close", "Relative_TOTAL_VISITS", "Relative_S_MEAN"],
+        y="Relative Change",
+        color="Metric",
         labels={
-            "Relative_Close": "Relative Stock Price",
-            "Relative_TOTAL_VISITS": "Relative Total Visits",
-            "Relative_S_MEAN": "Relative Sentiment Score",
             "DATE": "Date",
-            "value": "Relative Change",
-            "variable": "Metric",
+            "Relative Change": "Relative Change",
+            "Metric": "Metric",
         },
         title=f"Combined Analysis for {ticker} (Starting Value = 100)",
     )
