@@ -72,3 +72,31 @@ These notes provide a brief overview of the structure and content of the SP_500_
 - The table contains data related to company online performance at the domain level. The columns include information such as the company ticker, company name, domain, country, desktop and mobile visits, bounce rates, average visit durations, pages per visit, total visits, and the date of the data.
 
 These notes provide a brief overview of the structure and content of the SP_500_ESTIMATED_DOMAIN table in the Snowflake database. Additional analysis and exploration may be conducted to gain further insights into the data.
+
+## Notes on V_SUMMARY_BY_TOPIC_STOCK_15MIN View
+
+- The V_SUMMARY_BY_TOPIC_STOCK_15MIN view is located in the Snowflake database 'SFACTOR_SOCIAL_SENTIMENT_DATA_FOR_US_EQUITIES' and schema 'PUBLIC'.
+- The view contains the following columns:
+  - TICKER
+  - DATE
+  - RAW_S
+  - RAW_S_MEAN
+  - RAW_VOLATILITY
+  - RAW_SCORE
+  - S
+  - S_MEAN
+  - S_VOLATILITY
+  - S_SCORE
+  - S_VOLUME
+  - SV_MEAN
+  - SV_VOLATILITY
+  - SV_SCORE
+  - S_DISPERSION
+  - S_BUZZ
+  - S_DELTA
+  - CENTER_DATE
+  - CENTER_TIME
+  - CENTER_TIME_ZONE
+- The view contains data related to social sentiment for US equities, summarized by topic and stock at 15-minute intervals. The columns include information such as the stock ticker, date, raw sentiment scores, sentiment mean, sentiment volatility, sentiment score, sentiment volume, and other related metrics.
+
+These notes provide a brief overview of the structure and content of the V_SUMMARY_BY_TOPIC_STOCK_15MIN view in the Snowflake database. Additional analysis and exploration may be conducted to gain further insights into the data.
