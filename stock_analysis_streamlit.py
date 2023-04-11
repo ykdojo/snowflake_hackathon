@@ -208,7 +208,7 @@ The data for this analysis comes from the following sources:
 
 3. Stock Price Data: Retrieved from Yahoo Finance using the `yfinance` library. The data includes daily closing prices for each stock ticker.
 
-4. Pre-processed and Cached Data: Some of the tickers have been preprocessed and cached locally. If you select a ticker that hasn't been cached yet, it'll be cached with @st.cache_data.
+4. Pre-processed and Cached Data: Some of the tickers have been preprocessed and cached locally. If you select a ticker that hasn't been cached yet, it'll be cached with `@st.cache_data`.
 """
 )
 # Note
