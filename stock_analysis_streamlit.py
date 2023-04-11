@@ -45,6 +45,16 @@ fig_total_visits = px.line(
     title="Total Wbsite Visits for Selected Stock Tickers",
 )
 
+# Create a line plot for S_MEAN (average sentiment score)
+fig_s_mean = px.line(
+    df_combined,
+    x="DATE",
+    y="S_MEAN",
+    color="Ticker",
+    labels={"S_MEAN": "Average Sentiment Score", "DATE": "Date"},
+    title="Average Sentiment Score for Selected Stock Tickers",
+)
+
 # Calculate relative change for Close (stock price) and set starting value to 100
 for ticker in selected_tickers:
     df_combined.loc[df_combined["Ticker"] == ticker, "Relative_Close"] = (
@@ -55,6 +65,11 @@ for ticker in selected_tickers:
     df_combined.loc[df_combined["Ticker"] == ticker, "Relative_TOTAL_VISITS"] = (
         df_combined[df_combined["Ticker"] == ticker]["TOTAL_VISITS"]
         / df_combined[df_combined["Ticker"] == ticker]["TOTAL_VISITS"].iloc[0]
+        * 100
+    )
+    df_combined.loc[df_combined["Ticker"] == ticker, "Relative_S_MEAN"] = (
+        df_combined[df_combined["Ticker"] == ticker]["S_MEAN"]
+        / df_combined[df_combined["Ticker"] == ticker]["S_MEAN"].iloc[0]
         * 100
     )
 
@@ -78,25 +93,30 @@ fig_relative_total_visits = px.line(
     title="Relative Change in Total Website Visits (Starting Value = 100)",
 )
 
+# Create a line plot for relative change in S_MEAN (average sentiment score)
+fig_relative_s_mean = px.line(
+    df_combined,
+    x="DATE",
+    y="Relative_S_MEAN",
+    color="Ticker",
+    labels={"Relative_S_MEAN": "Relative Sentiment Score", "DATE": "Date"},
+    title="Relative Change in Sentiment Score (Starting Value = 100)",
+)
+
 stock_absolute, stock_relative = st.tabs(["Stock Price", "Relative Change"])
 with stock_absolute:
     st.plotly_chart(fig)
 with stock_relative:
     st.plotly_chart(fig_relative_close)
 
-visits_absolute, visits_relative = st.tabs(["Total Website Visits", "Relative Change"])
+visits_relative, visits_absolute = st.tabs(["Relative Change", "Total Website Visits"])
 with visits_relative:
     st.plotly_chart(fig_relative_total_visits)
 with visits_absolute:
     st.plotly_chart(fig_total_visits)
 
-# Create a line plot for S_MEAN (average sentiment score)
-fig_s_mean = px.line(
-    df_combined,
-    x="DATE",
-    y="S_MEAN",
-    color="Ticker",
-    labels={"S_MEAN": "Average Sentiment Score", "DATE": "Date"},
-    title="Average Sentiment Score for Selected Stock Tickers",
-)
-st.plotly_chart(fig_s_mean)
+sentiment_absolute, sentiment_relative = st.tabs(["Sentiment Score", "Relative Change"])
+with sentiment_relative:
+    st.plotly_chart(fig_relative_s_mean)
+with sentiment_absolute:
+    st.plotly_chart(fig_s_mean)
