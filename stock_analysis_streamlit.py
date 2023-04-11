@@ -10,7 +10,7 @@ available_tickers = ["AAPL", "GOOG", "MSFT", "AMZN", "TSLA"]
 selected_tickers = st.multiselect(
     label="Select Stock Tickers",
     options=available_tickers,
-    default=["AAPL", "GOOG", "MSFT", "AMZN", "TSLA"],
+    default=["AAPL", "GOOG", "MSFT"],
 )
 
 # Initialize an empty DataFrame to store the combined data
