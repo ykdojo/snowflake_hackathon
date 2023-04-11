@@ -86,8 +86,15 @@ df_stock_price = yf.download(TICKER, start=df_sentiment['DATE'].min(), end=df_se
 # Reset the index of the stock price DataFrame
 df_stock_price.reset_index(inplace=True)
 
-# Merge the stock price data with the sentiment and website traffic data based on the date
-df_combined = pd.merge(df_sentiment, df_traffic, on='DATE', how='inner')
+# Resample the sentiment data to daily frequency (aggregating only numeric columns)
+numeric_cols = df_sentiment.select_dtypes(include=['number']).columns
+df_sentiment_daily = df_sentiment[['DATE'] + list(numeric_cols)].copy()
+df_sentiment_daily.set_index('DATE', inplace=True)
+df_sentiment_daily = df_sentiment_daily.resample('D').mean()
+df_sentiment_daily.reset_index(inplace=True)
+
+# Merge the stock price data with the daily sentiment and website traffic data based on the date
+df_combined = pd.merge(df_sentiment_daily, df_traffic, left_on='DATE', right_on='DATE', how='inner')
 df_combined = pd.merge(df_combined, df_stock_price, left_on='DATE', right_on='Date', how='inner')
 
 # Drop the duplicate 'Date' column
