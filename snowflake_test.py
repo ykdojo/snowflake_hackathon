@@ -10,7 +10,7 @@ SNOWFLAKE_USER = os.getenv('SNOWFLAKE_USER')
 SNOWFLAKE_PASSWORD = os.getenv('SNOWFLAKE_PASSWORD')
 SNOWFLAKE_ACCOUNT = os.getenv('SNOWFLAKE_ACCOUNT')
 SNOWFLAKE_WAREHOUSE = os.getenv('SNOWFLAKE_WAREHOUSE')
-SNOWFLAKE_DATABASE = 'GOOGLE_KEYWORDS_SEARCH_DATASET__DISCOVER_ALL_SEARCHES_ON_GOOGLE'
+SNOWFLAKE_DATABASE = 'S__P_500_BY_DOMAIN_AND_AGGREGATED_BY_TICKERS_SAMPLE'
 SNOWFLAKE_SCHEMA = 'DATAFEEDS'
 
 # Create a connection to Snowflake
@@ -27,7 +27,7 @@ conn = snowflake.connector.connect(
 cur = conn.cursor()
 
 # Execute a sample query (replace with your own query)
-cur.execute("SHOW TABLES")
+cur.execute("SELECT * FROM SP_500 LIMIT 10")
 
 # Fetch the result of the query
 result = cur.fetchall()
