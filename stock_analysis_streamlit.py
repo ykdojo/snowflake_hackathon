@@ -25,10 +25,15 @@ for ticker in selected_tickers:
     # Concatenate the data to the combined DataFrame
     df_combined = pd.concat([df_combined, df_ticker], ignore_index=True)
 
-# Create a line plot using Plotly Express
+# Create a line plot using Plotly Express for stock price
 fig = px.line(df_combined, x='DATE', y='Close', color='Ticker',
-              labels={'Close': 'Closing Price', 'DATE': 'Date'},
-              title='Trends for Selected Stock Tickers')
+              labels={'Close': 'Stock Price', 'DATE': 'Date'},
+              title='Stock Price for Selected Stock Tickers')
+
+# Create a line plot for TOTAL_VISITS
+fig_total_visits = px.line(df_combined, x='DATE', y='TOTAL_VISITS', color='Ticker',
+                           labels={'TOTAL_VISITS': 'Total Website Visits', 'DATE': 'Date'},
+                           title='Total Wbsite Visits for Selected Stock Tickers')
 
 # Calculate relative change for Close (stock price) and set starting value to 100
 for ticker in selected_tickers:
@@ -43,21 +48,22 @@ fig_relative_close = px.line(df_combined, x='DATE', y='Relative_Close', color='T
 # Create a line plot for relative change in total visits
 fig_relative_total_visits = px.line(df_combined, x='DATE', y='Relative_TOTAL_VISITS', color='Ticker',
                                     labels={'Relative_TOTAL_VISITS': 'Relative Total Visits', 'DATE': 'Date'},
-                                    title='Relative Change in Total Visits (Starting Value = 100)')
+                                    title='Relative Change in Total Website Visits (Starting Value = 100)')
 
-# Create tabs using Streamlit's beta_expander function
-with st.beta_expander('Stock Price', expanded=True):
-    # Display the plot for absolute change in stock price
+stock_absolute, stock_relative = st.tabs(["Stock Price", "Relative Change"])
+with stock_absolute:
     st.plotly_chart(fig)
-    # Display the plot for relative change in stock price
+with stock_relative:
     st.plotly_chart(fig_relative_close)
 
-with st.beta_expander('Total Visits'):
-    # Display the plot for absolute change in total visits
-    st.plotly_chart(fig_total_visits)
-    # Display the plot for relative change in total visits
+visits_absolute, visits_relative = st.tabs(["Total Website Visits", "Relative Change"])
+with visits_relative:
     st.plotly_chart(fig_relative_total_visits)
+with visits_absolute:
+    st.plotly_chart(fig_total_visits)
 
-with st.beta_expander('Average Sentiment Score'):
-    # Display the plot for average sentiment score (S_MEAN)
-    st.plotly_chart(fig_s_mean)
+# Create a line plot for S_MEAN (average sentiment score)
+fig_s_mean = px.line(df_combined, x='DATE', y='S_MEAN', color='Ticker',
+labels={'S_MEAN': 'Average Sentiment Score', 'DATE': 'Date'},
+title='Average Sentiment Score for Selected Stock Tickers')
+st.plotly_chart(fig_s_mean)
