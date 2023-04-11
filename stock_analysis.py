@@ -67,7 +67,7 @@ print('Website Traffic Data Frequency:', (df_traffic['DATE'].diff().value_counts
 
 # Retrieve stock price data from Yahoo Finance
 print('Retrieving stock price data from Yahoo Finance...')
-df_stock_price = yf.download(TICKER, start=df_sentiment['DATE'].min(), end=df_sentiment['DATE'].max())
+df_stock_price = yf.download(TICKER, period='max')
 
 # Reset the index of the stock price DataFrame
 df_stock_price.reset_index(inplace=True)
@@ -100,6 +100,19 @@ df_combined = pd.merge(df_combined, df_stock_price, left_on='DATE', right_on='Da
 # Drop the duplicate 'Date' column
 df_combined.drop(columns=['Date'], inplace=True)
 
+# Check for missing values in the combined DataFrame
+missing_values = df_combined.isnull().sum()
+if missing_values.any():
+    print('Missing values detected:')
+    print(missing_values)
+    # Handle missing values (e.g., interpolation, forward-filling, etc.)
+    df_combined.fillna(method='ffill', inplace=True)
+    df_combined.fillna(method='bfill', inplace=True)
+
 # Print the combined DataFrame (for demonstration purposes)
 print('Combined Data:')
 print(df_combined.head())
+
+# Print the date range and total number of rows in the combined DataFrame
+print('Date Range:', df_combined['DATE'].min(), 'to', df_combined['DATE'].max())
+print('Total Number of Rows (Days):', len(df_combined))
