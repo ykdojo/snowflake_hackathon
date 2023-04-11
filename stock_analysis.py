@@ -2,6 +2,7 @@ import os
 from dotenv import load_dotenv
 import snowflake.connector
 import pandas as pd
+import yfinance as yf  # Import the yfinance library
 
 # Load environment variables from the .env file
 load_dotenv()
@@ -57,11 +58,23 @@ with snowflake.connector.connect(
 df_sentiment['DATE'] = pd.to_datetime(df_sentiment['DATE'])
 df_traffic['DATE'] = pd.to_datetime(df_traffic['DATE'])
 
-# Print the DataFrames (for demonstration purposes)
-print('Sentiment Data:')
-print(df_sentiment.head())
-print('Website Traffic Data:')
-print(df_traffic.head())
+# Print the date ranges and frequencies for each DataFrame
+print('Sentiment Data Date Range:', df_sentiment['DATE'].min(), 'to', df_sentiment['DATE'].max())
+print('Sentiment Data Frequency:', (df_sentiment['DATE'].diff().value_counts().idxmax()))
+
+print('Website Traffic Data Date Range:', df_traffic['DATE'].min(), 'to', df_traffic['DATE'].max())
+print('Website Traffic Data Frequency:', (df_traffic['DATE'].diff().value_counts().idxmax()))
+
+# Retrieve stock price data from Yahoo Finance
+print('Retrieving stock price data from Yahoo Finance...')
+df_stock_price = yf.download(TICKER, start=df_sentiment['DATE'].min(), end=df_sentiment['DATE'].max())
+
+# Reset the index of the stock price DataFrame
+df_stock_price.reset_index(inplace=True)
+
+# Print the date ranges and frequencies for the stock price data
+print('Stock Price Data Date Range:', df_stock_price['Date'].min(), 'to', df_stock_price['Date'].max())
+print('Stock Price Data Frequency:', (df_stock_price['Date'].diff().value_counts().idxmax()))
 
 # Import the yfinance library
 import yfinance as yf
