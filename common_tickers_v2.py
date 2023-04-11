@@ -61,7 +61,8 @@ stock_price_tickers = set(get_sp500_tickers())
 # Find the common tickers among all three data sources
 common_tickers = sentiment_tickers.intersection(traffic_tickers, stock_price_tickers)
 
-# Print the list of common stock tickers
-print("List of common stock tickers among all three data sources:")
-for ticker in common_tickers:
-    print(ticker)
+# Write the list of common stock tickers to a file
+with open('common_tickers_list.txt', 'w') as file:
+    file.write('List of common stock tickers among all three data sources:\n')
+    for ticker in common_tickers:
+        file.write(ticker + '\n')
