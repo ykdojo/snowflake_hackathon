@@ -1,4 +1,3 @@
-List of common stock tickers among all three data sources:
 PAYX
 ADSK
 NVDA
