@@ -55,16 +55,20 @@ print('Executing website traffic data query...')
 cur.execute(query_traffic)
 result_traffic = cur.fetchall()
 
-# Convert results to DataFrames
-# Debugging: Print column names and data
-print('Number of column names:', len([desc[0] for desc in cur.description]))
-print('Column names:', [desc[0] for desc in cur.description])
-print('Number of columns in data:', len(result_sentiment[0]))
-print('Sentiment data (first 5 rows):', result_sentiment[:5])
+# Execute queries and fetch results
+print('Executing sentiment data query...')
+cur.execute(query_sentiment)
+result_sentiment = cur.fetchall()
+sentiment_columns = [desc[0] for desc in cur.description]  # Get column names for sentiment data
 
-# Create DataFrame
-df_sentiment = pd.DataFrame(result_sentiment, columns=[desc[0] for desc in cur.description])
-df_traffic = pd.DataFrame(result_traffic, columns=[desc[0] for desc in cur.description])
+print('Executing website traffic data query...')
+cur.execute(query_traffic)
+result_traffic = cur.fetchall()
+traffic_columns = [desc[0] for desc in cur.description]  # Get column names for traffic data
+
+# Convert results to DataFrames
+df_sentiment = pd.DataFrame(result_sentiment, columns=sentiment_columns)
+df_traffic = pd.DataFrame(result_traffic, columns=traffic_columns)
 
 # Close the cursor and connection
 cur.close()
