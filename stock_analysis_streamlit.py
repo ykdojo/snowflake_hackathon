@@ -5,7 +5,7 @@ st.title('Stock Analysis Dashboard')
 
 # Description
 st.markdown("""
-Explore stock data, website visits, and sentiment analysis with this interactive dashboard. Select stock tickers to analyze trends in stock prices, website traffic, and sentiment scores. Visualize both absolute values and relative changes to gain valuable insights.
+Explore stock price data, website visits, and sentiment analysis with this interactive dashboard. Select stock tickers to analyze trends in stock prices, website traffic, and sentiment scores. Visualize both absolute values and relative changes to gain valuable insights.
 """)
 
 # Separator
@@ -43,7 +43,7 @@ fig = px.line(
     y="Close",
     color="Ticker",
     labels={"Close": "Stock Price", "DATE": "Date"},
-    title="Stock Price for Selected Stock Tickers",
+    title="Daily Closing Price for Selected Stock Tickers",
 )
 
 # Create a line plot for TOTAL_VISITS
@@ -53,7 +53,7 @@ fig_total_visits = px.line(
     y="TOTAL_VISITS",
     color="Ticker",
     labels={"TOTAL_VISITS": "Total Website Visits", "DATE": "Date"},
-    title="Total Wbsite Visits for Selected Stock Tickers",
+    title="Total Website Visits for Selected Stock Tickers",
 )
 
 # Create a line plot for S_MEAN (average sentiment score)
@@ -155,7 +155,7 @@ for ticker in selected_tickers:
     )
     # Map column names to more descriptive labels
     metric_labels = {
-        "Relative_Close": "Stock Price Change (Beginning = 100)",
+        "Relative_Close": "Relative Stock Price Change",
         "Relative_TOTAL_VISITS": "Relative Website Visit Change",
         "Relative_S_MEAN": "Relative Average Sentiment Score Change",
     }
