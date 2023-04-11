@@ -57,9 +57,6 @@ with snowflake.connector.connect(
 df_sentiment['DATE'] = pd.to_datetime(df_sentiment['DATE'])
 df_traffic['DATE'] = pd.to_datetime(df_traffic['DATE'])
 
-# TODO: Retrieve stock price history data from an external API
-# TODO: Standardize date formats across all data sources
-
 # Print the DataFrames (for demonstration purposes)
 print('Sentiment Data:')
 print(df_sentiment.head())
