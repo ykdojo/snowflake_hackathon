@@ -8,7 +8,7 @@ st.markdown(
     """
 With this interactive tool, you can select stock tickers and explore trends in daily closing prices, website traffic, and sentiment scores. The dashboard provides visualizations of both absolute values and relative changes, giving you valuable insights into the performance of the selected stocks.
 
-*Note: The time range for this analysis is limited due to the availability of historical data for sentiment scores and website visits.
+*Note: The time range for this analysis and the stock ticker selection are limited due to the availability of historical data.
 """
 )
 
