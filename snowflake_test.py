@@ -10,7 +10,7 @@ SNOWFLAKE_USER = os.getenv('SNOWFLAKE_USER')
 SNOWFLAKE_PASSWORD = os.getenv('SNOWFLAKE_PASSWORD')
 SNOWFLAKE_ACCOUNT = os.getenv('SNOWFLAKE_ACCOUNT')
 SNOWFLAKE_WAREHOUSE = os.getenv('SNOWFLAKE_WAREHOUSE')
-SNOWFLAKE_DATABASE = 'S__P_500_BY_DOMAIN_AND_AGGREGATED_BY_TICKERS_SAMPLE'
+SNOWFLAKE_DATABASE = 'SP_500_COMPANY_ONLINE_PERFORMANCE_TICKER_AND_DOMAIN_LEVEL_DATA'
 SNOWFLAKE_SCHEMA = 'DATAFEEDS'
 
 # Create a connection to Snowflake
@@ -27,7 +27,7 @@ conn = snowflake.connector.connect(
 cur = conn.cursor()
 
 # Execute a sample query (replace with your own query)
-cur.execute("SELECT * FROM SP_500 LIMIT 10")
+cur.execute("SELECT * FROM SP_500_ESTIMATED_TICKERS LIMIT 10")
 
 # Fetch the result of the query
 result = cur.fetchall()
