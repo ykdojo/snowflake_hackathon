@@ -19,7 +19,7 @@ for ticker_symbol in tickers_list:
 
 # Write the updated ticker-company mappings to a new CSV file
 import csv
-with open('projects/snowflake_hackathon/updated_tickers_list.csv', 'w', newline='') as csvfile:
+with open('updated_tickers_list.csv', 'w', newline='') as csvfile:
     fieldnames = ['Ticker', 'Company']
     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
     writer.writeheader()
