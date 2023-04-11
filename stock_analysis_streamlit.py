@@ -6,6 +6,8 @@ st.title('Stock Analysis Dashboard')
 # Description
 st.markdown("""
 With this interactive tool, you can select stock tickers and explore trends in daily closing prices, website traffic, and sentiment scores. The dashboard provides visualizations of both absolute values and relative changes, giving you valuable insights into the performance of the selected stocks.
+
+*Note: The time range for this analysis is limited due to the availability of historical data for sentiment scores and website visits.
 """)
 
 # Separator
@@ -175,3 +177,20 @@ for ticker in selected_tickers:
         title=f"Combined Analysis for {ticker} (Starting Value = 100)",
     )
     st.plotly_chart(fig_combined)
+
+# Data Sources
+st.markdown('---')
+st.header('Data Sources')
+st.markdown("""
+The data for this analysis comes from the following sources:
+
+1. Sentiment Data: Retrieved from the Snowflake database 'SFACTOR_SOCIAL_SENTIMENT_DATA_FOR_US_EQUITIES'. The data includes sentiment scores for each stock ticker at 15-minute intervals.
+
+2. Website Traffic Data: Retrieved from the Snowflake database 'SP_500_COMPANY_ONLINE_PERFORMANCE_TICKER_AND_DOMAIN_LEVEL_DATA'. The data includes estimated website visits for each stock ticker.
+
+3. Stock Price Data: Retrieved from Yahoo Finance using the `yfinance` library. The data includes daily closing prices for each stock ticker.
+""")
+# Note
+st.markdown('---')
+st.subheader('Note')
+st.markdown('While sentiment data and website traffic data were retrieved from Snowflake databases, stock price data was retrieved from Yahoo Finance using the `yfinance` library. Ideally, a Snowflake source would have been used for stock price data as well, but such a source could not be identified for this analysis.')
