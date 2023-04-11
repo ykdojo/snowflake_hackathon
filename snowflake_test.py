@@ -27,13 +27,19 @@ conn = snowflake.connector.connect(
 cur = conn.cursor()
 
 # Execute a sample query (replace with your own query)
-cur.execute("SELECT CURRENT_VERSION()")
+cur.execute("SHOW TABLES")
 
 # Fetch the result of the query
-result = cur.fetchone()
+result = cur.fetchall()
 
 # Print the result
-print("Snowflake version:", result[0])
+print("Schemas in the Snowflake database:")
+# Print column labels
+column_labels = [desc[0] for desc in cur.description]
+print(column_labels)
+# Print rows
+for schema in result:
+    print(schema)
 
 # Close the cursor and connection
 cur.close()
