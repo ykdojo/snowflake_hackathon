@@ -32,3 +32,17 @@ fig = px.line(df_combined, x='DATE', y='Close', color='Ticker',
 
 # Display the plot in Streamlit
 st.plotly_chart(fig)
+
+# Create a line plot for TOTAL_VISITS
+fig_total_visits = px.line(df_combined, x='DATE', y='TOTAL_VISITS', color='Ticker',
+                           labels={'TOTAL_VISITS': 'Total Visits', 'DATE': 'Date'},
+                           title='Total Visits for Selected Stock Tickers')
+# Display the plot for TOTAL_VISITS in Streamlit
+st.plotly_chart(fig_total_visits)
+
+# Create a line plot for S_MEAN
+fig_s_mean = px.line(df_combined, x='DATE', y='S_MEAN', color='Ticker',
+                     labels={'S_MEAN': 'Average Sentiment Score', 'DATE': 'Date'},
+                     title='Average Sentiment Score for Selected Stock Tickers')
+# Display the plot for S_MEAN in Streamlit
+st.plotly_chart(fig_s_mean)
