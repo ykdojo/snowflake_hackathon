@@ -18,7 +18,7 @@ for ticker in selected_tickers:
     df_ticker = combine_data(ticker)
     
     # Create a line plot using Plotly Express
-    fig = px.line(df_ticker, x='DATE', y=['TOTAL_VISITS', 'Close', 'S_MEAN'],
+    fig = px.line(df_ticker, x='DATE', y=['Close'],
                   labels={'value': 'Values', 'variable': 'Metrics'},
                   title=f'Trends for {ticker}')
     
