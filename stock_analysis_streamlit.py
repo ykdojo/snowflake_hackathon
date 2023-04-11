@@ -207,6 +207,8 @@ The data for this analysis comes from the following sources:
 2. Website Traffic Data: Retrieved from the Snowflake database 'SP_500_COMPANY_ONLINE_PERFORMANCE_TICKER_AND_DOMAIN_LEVEL_DATA'. The data includes estimated website visits for each stock ticker.
 
 3. Stock Price Data: Retrieved from Yahoo Finance using the `yfinance` library. The data includes daily closing prices for each stock ticker.
+
+4. Pre-processed and Cached Data: All available stock tickers have been pre-processed and cached for faster loading and analysis. In reality, the cache should be refreshed on a regular basis to ensure that the most up-to-date data is being used. For now though, it's simply hosted as local files. The code for making this cache can be found at cache_all_data.py.
 """
 )
 # Note
