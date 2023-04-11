@@ -21,61 +21,43 @@ SCHEMA_TRAFFIC = 'DATAFEEDS'
 # Define the stock ticker to analyze
 TICKER = 'AAPL'
 
-print('Creating a connection to Snowflake...')
-# Create a connection to Snowflake
-conn = snowflake.connector.connect(
-    user=SNOWFLAKE_USER,
-    password=SNOWFLAKE_PASSWORD,
-    account=SNOWFLAKE_ACCOUNT,
-    warehouse=SNOWFLAKE_WAREHOUSE
-)
+# Create a reusable function for executing SQL queries and fetching results
+def execute_query_and_fetch_results(conn, query):
+    with conn.cursor() as cur:
+        cur.execute(query)
+        results = cur.fetchall()
+        columns = [desc[0] for desc in cur.description]
+    return pd.DataFrame(results, columns=columns)
 
-# Create a cursor object to execute SQL queries
-cur = conn.cursor()
-
-# Query to retrieve sentiment data
+# Define queries
 query_sentiment = f"""
 SELECT *
 FROM {DB_SENTIMENT}.{SCHEMA_SENTIMENT}.V_SUMMARY_BY_TOPIC_STOCK_15MIN
 WHERE TICKER = '{TICKER}'
 """
-
-# Query to retrieve website traffic data
 query_traffic = f"""
 SELECT *
 FROM {DB_TRAFFIC}.{SCHEMA_TRAFFIC}.SP_500_ESTIMATED_TICKERS
 WHERE TICKER = '{TICKER}'
 """
 
-print('Executing sentiment data query...')
-# Execute queries and fetch results
-cur.execute(query_sentiment)
-result_sentiment = cur.fetchall()
-print('Executing website traffic data query...')
-cur.execute(query_traffic)
-result_traffic = cur.fetchall()
+# Create a connection to Snowflake and execute queries
+with snowflake.connector.connect(
+    user=SNOWFLAKE_USER,
+    password=SNOWFLAKE_PASSWORD,
+    account=SNOWFLAKE_ACCOUNT,
+    warehouse=SNOWFLAKE_WAREHOUSE
+) as conn:
+    print('Executing sentiment data query...')
+    df_sentiment = execute_query_and_fetch_results(conn, query_sentiment)
+    print('Executing website traffic data query...')
+    df_traffic = execute_query_and_fetch_results(conn, query_traffic)
 
-# Execute queries and fetch results
-print('Executing sentiment data query...')
-cur.execute(query_sentiment)
-result_sentiment = cur.fetchall()
-sentiment_columns = [desc[0] for desc in cur.description]  # Get column names for sentiment data
-
-print('Executing website traffic data query...')
-cur.execute(query_traffic)
-result_traffic = cur.fetchall()
-traffic_columns = [desc[0] for desc in cur.description]  # Get column names for traffic data
-
-# Convert results to DataFrames
-df_sentiment = pd.DataFrame(result_sentiment, columns=sentiment_columns)
-df_traffic = pd.DataFrame(result_traffic, columns=traffic_columns)
-
-# Close the cursor and connection
-cur.close()
-conn.close()
+# Standardize date formats across all data sources
+df_sentiment['DATE'] = pd.to_datetime(df_sentiment['DATE'])
+df_traffic['DATE'] = pd.to_datetime(df_traffic['DATE'])
 
 # TODO: Retrieve stock price history data from an external API
-
 # TODO: Standardize date formats across all data sources
 
 # Print the DataFrames (for demonstration purposes)
