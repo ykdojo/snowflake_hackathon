@@ -36,7 +36,7 @@ To set up a virtual environment for this project, follow these steps:
 After setting up and activating the virtual environment, you can run the project using the following command:
 
 ```
-python app.py
+streamlit run stock_analysis_streamlit.py
 ```
 
 This will start the application, and you can access it via the provided URL.
